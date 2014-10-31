@@ -39,9 +39,15 @@
 }
 
 - (IBAction)executeCommand:(id)sender {
-	SSHWrapper *sshWrapper = [[SSHWrapper alloc] init];
+	
+    [textField resignFirstResponder];
+    [ipField resignFirstResponder];
+    [userField resignFirstResponder];
+    [passwordField resignFirstResponder];
+	
+    SSHWrapper *sshWrapper = [[SSHWrapper alloc] init];
     NSError *error = nil;
-	[sshWrapper connectToHost:ipField.text port:22 user:userField.text password:passwordField.text error:&error];
+    [sshWrapper connectToHost:ipField.text port:22 user:userField.text password:passwordField.text error:&error];
 
     if (!error) {
         textView.text = [sshWrapper executeCommand:textField.text error:&error];
@@ -55,10 +61,6 @@
         [alertView show];
     }
 	
-	[textField resignFirstResponder];
-	[ipField resignFirstResponder];
-	[userField resignFirstResponder];
-	[passwordField resignFirstResponder];
 }
 
 
